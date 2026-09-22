@@ -22,7 +22,7 @@
           {{/* Use first image as preview, or fallback to icon */}}
           {{ $firstImg := index (.Resources.ByType "image") 0 }}
           {{ if $firstImg }}
-            {{ $thumb := $firstImg.Fill "400x600 Center" }}
+            {{ $thumb := $firstImg.Fill "400x600 Center webp" }}
             <img src="{{ $thumb.RelPermalink }}" alt="{{ .Title }}" loading="lazy">
           {{ else }}
             <div class="gallery-subsection-placeholder">
@@ -52,8 +52,9 @@
     <div class="gallery-grid">
       {{ range $idx, $img := $images }}
       <div class="gallery-item">
-        <a href="{{ $img.RelPermalink }}" class="gallery-link" data-gallery="{{ $.Title }}">
-          {{ $thumb := $img.Fill "400x600 Center" }}
+        {{ $full := $img.Resize "1920x webp" }}
+        <a href="{{ $full.RelPermalink }}" class="gallery-link" data-gallery="{{ $.Title }}">
+          {{ $thumb := $img.Fill "400x600 Center webp" }}
           <img src="{{ $thumb.RelPermalink }}" alt="{{ $img.Name }}" loading="lazy">
         </a>
       </div>

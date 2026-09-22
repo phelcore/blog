@@ -7,6 +7,8 @@ theme = 'photon'
   description = "A photo gallery and blog"
   author = "phelcore"
 
+defaultImageFormat = "webp"
+
 [[menu.main]]
   name = "Gallery"
   pageRef = "/gallery"
