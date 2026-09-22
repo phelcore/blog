@@ -1,0 +1,7 @@
+{{ $root := site.GetPage "gallery" }}
+{{ $parent := .Parent }}
+{{ if and $parent (ne $parent.RelPermalink $root.RelPermalink) }}
+  {{ partial "breadcrumb.html" $parent }}
+  <span class="breadcrumb-sep">/</span>
+  <a href="{{ $parent.RelPermalink }}">{{ $parent.Title }}</a>
+{{ end }}

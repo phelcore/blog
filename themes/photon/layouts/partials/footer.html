@@ -1,0 +1,16 @@
+<footer>
+  <p>&copy; {{ now.Format "2006" }} {{ .Site.Params.author | default .Site.Title }} &middot; Built with Hugo</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+<script>
+  // Initialize GLightbox for gallery links after the library loads
+  if (typeof GLightbox !== 'undefined') {
+    GLightbox({
+      selector: '.gallery-link',
+      touchNavigation: true,
+      loop: true,
+      closeOnOutsideClick: true,
+      prevNext: true
+    });
+  }
+</script>

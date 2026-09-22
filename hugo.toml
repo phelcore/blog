@@ -1,0 +1,13 @@
+baseURL = 'https://phelcore.github.io/blog/'
+locale = 'en-us'
+title = 'phelcore'
+theme = 'photon'
+
+[params]
+  description = "A photo gallery and blog"
+  author = "phelcore"
+
+[[menu.main]]
+  name = "Gallery"
+  pageRef = "/gallery"
+  weight = 10

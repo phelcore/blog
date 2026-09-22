@@ -1,0 +1,10 @@
+# Hugo
+/public
+/resources
+/thumbs
+
+# Dependencies
+/resources/_gen
+
+# OS
+.DS_Store

@@ -1,0 +1,71 @@
+{{ define "main" }}
+<section class="gallery-page">
+  <div class="container">
+
+    {{/* Breadcrumb navigation */}}
+    {{ if and .Parent (ne . (site.GetPage "gallery")) }}
+    <nav class="gallery-breadcrumb">
+      <a href="{{ (site.GetPage "gallery").RelPermalink }}">{{ (site.GetPage "gallery").Title }}</a>
+      {{ partial "breadcrumb.html" . }}
+    </nav>
+    {{ end }}
+
+    <h1>{{ .Title }}</h1>
+
+    {{/* Sub-gallery cards (child sections) */}}
+    {{ $sections := where .Sections "Params.hideFromGallery" "ne" true }}
+    {{ if $sections }}
+    <div class="gallery-grid gallery-grid-subsections">
+      {{ range $sections }}
+      <div class="gallery-item gallery-item-subsection">
+        <a href="{{ .RelPermalink }}" class="gallery-subsection-link">
+          {{/* Use first image as preview, or fallback to icon */}}
+          {{ $firstImg := index (.Resources.ByType "image") 0 }}
+          {{ if $firstImg }}
+            {{ $thumb := $firstImg.Fill "400x600 Center" }}
+            <img src="{{ $thumb.RelPermalink }}" alt="{{ .Title }}" loading="lazy">
+          {{ else }}
+            <div class="gallery-subsection-placeholder">
+              <span class="folder-icon">📁</span>
+            </div>
+          {{ end }}
+          <div class="gallery-caption">
+            <strong>{{ .Title }}</strong>
+            {{ if .Description }}<p>{{ .Description }}</p>{{ end }}
+            {{ $imgCount := len (.Resources.ByType "image") }}
+            {{ $subCount := len (.Sections) }}
+            <span class="gallery-count">
+              {{ if gt $imgCount 0 }}{{ $imgCount }} photos{{ end }}
+              {{ if and (gt $imgCount 0) (gt $subCount 0) }} · {{ end }}
+              {{ if gt $subCount 0 }}{{ $subCount }} folders{{ end }}
+            </span>
+          </div>
+        </a>
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+
+    {{/* Image grid */}}
+    {{ $images := .Resources.ByType "image" }}
+    {{ if $images }}
+    <div class="gallery-grid">
+      {{ range $idx, $img := $images }}
+      <div class="gallery-item">
+        <a href="{{ $img.RelPermalink }}" class="gallery-link" data-gallery="{{ $.Title }}">
+          {{ $thumb := $img.Fill "400x600 Center" }}
+          <img src="{{ $thumb.RelPermalink }}" alt="{{ $img.Name }}" loading="lazy">
+        </a>
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+
+    {{/* Empty state */}}
+    {{ if and (not $sections) (not $images) }}
+    <p class="gallery-empty">No photos or sub-galleries yet.</p>
+    {{ end }}
+
+  </div>
+</section>
+{{ end }}
